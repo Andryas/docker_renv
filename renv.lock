@@ -227,16 +227,6 @@
       ],
       "Hash": "266c1ca411266ba8f365fcc726444b87"
     },
-    "wesanderson": {
-      "Package": "wesanderson",
-      "Version": "0.3.7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "f0d5ebcc72b5d6d2f338be8d80d39004"
-    },
     "withr": {
       "Package": "withr",
       "Version": "2.5.2",
