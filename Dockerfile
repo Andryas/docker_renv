@@ -3,11 +3,9 @@
 FROM r-base:4.3.1
 
 RUN R -e 'install.packages("remotes")'
-
 RUN R -e 'remotes::install_version("renv", version="1.0.3")'
 
 WORKDIR /project
-RUN R -e "renv::init()"
 
 COPY renv.lock renv.lock
 
@@ -17,6 +15,8 @@ COPY restore.R restore.R
 COPY renv/activate.R renv/activate.R
 COPY renv/settings.json renv/settings.json
 
-RUN --mount=type=cache,target=/renv Rscript /project/restore.R
+RUN R --vanilla -s -e 'renv::restore()'
 
-CMD  ["R", "-e", "print('It worked')"]
+COPY R/ R/
+
+# CMD  ["R", "-e", "print('It worked')"]
