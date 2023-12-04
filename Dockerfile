@@ -15,8 +15,11 @@ COPY restore.R restore.R
 COPY renv/activate.R renv/activate.R
 COPY renv/settings.json renv/settings.json
 
-RUN R --vanilla -s -e 'renv::restore()'
+RUN --mount=type=cache,target=/renv Rscript --vanilla /project/restore.R
 
-COPY R/ R/
+COPY golex_*.tar.gz /app.tar.gz
+RUN R --vanilla -e 'remotes::install_local("/app.tar.gz", upgrade="never", dependencies=FALSE)'
+RUN rm /app.tar.gz
 
-# CMD  ["R", "-e", "print('It worked')"]
+EXPOSE 3838
+CMD  ["R", "--vanilla", "-e", "options('shiny.port'=3838,shiny.host='0.0.0.0'); golex::run_app()"]
